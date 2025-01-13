@@ -3,7 +3,7 @@
 from typing import Optional, Any
 from Estructuras.Node import Node
 
-class SinglyLinkedList:
+class LinkedList:
 
     def __init__(self):
         self.head: Optional[Node] = None
@@ -59,9 +59,7 @@ class SinglyLinkedList:
         """Cambia el valor guardado en el nodo del indice
         """
         node = self._get_node(index)
-        old_value = node.data
         node.data = value
-        return old_value
 
     def remove_at(self, index: int):
         """Quita el nodo del indice
@@ -93,3 +91,6 @@ class SinglyLinkedList:
         for _ in range(index):
             current = current.next
         return current
+
+    def __len__(self) -> int:
+        return self.size
