@@ -92,5 +92,25 @@ class LinkedList:
             current = current.next
         return current
 
+    def search(self, value: Any) -> int:
+        current = self.head
+        index = 0
+
+        while current is not None:
+            if current.data == value:
+                return index
+            current = current.next
+            index += 1
+
+        return -1
+
+    def print_list(self) -> None:
+        elements = []
+        current = self.head
+        while current is not None:
+            elements.append(current.data)
+            current = current.next
+        print(" -> ".join(map(str, elements)) if elements else "Empty list")
+
     def __len__(self) -> int:
         return self.size
