@@ -20,35 +20,15 @@ class LinkedList:
     def is_empty(self):
         return self.size == 0
 
-    def add(self, value: Any):
-        """Agrega un nodo con el valor al final de la lista
-        """
-        self.add_at(self.size, value)
-
-    def add_at(self, index: int, value: Any):
-        """Agrega un nodo con el valor en el indice
-        """
-        if index < 0 or index > self.size:
-            raise IndexError("Index out of bounds")
-
-        if index == 0:
-            new_node = Node(value, self.head)
+    def add(self, value):
+        new_node = Node(value)
+        if not self.head:
             self.head = new_node
-
-            if self.is_empty():
-                self.tail = new_node
-
-        elif index == self.size:
-            new_node = Node(value)
-            self.tail.next = new_node
-            self.tail = new_node
-
         else:
-            prev_node = self._get_node(index - 1)
-            new_node = Node(value, prev_node.next)
-            prev_node.next = new_node
-
-        self.size += 1
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
 
     def get(self, index: int)->Any:
         """Obtiene el valor en el nodo del indice
@@ -92,17 +72,13 @@ class LinkedList:
             current = current.next
         return current
 
-    def search(self, value: Any) -> int:
+    def search(self, value):
         current = self.head
-        index = 0
-
-        while current is not None:
+        while current:
             if current.data == value:
-                return index
+                return current
             current = current.next
-            index += 1
-
-        return -1
+        return None
 
     def print_list(self) -> None:
         elements = []
@@ -114,3 +90,14 @@ class LinkedList:
 
     def __len__(self) -> int:
         return self.size
+
+    def __iter__(self):
+        self.current = self.head
+        return self
+
+    def __next__(self):
+        if self.current is None:
+            raise StopIteration
+        data = self.current.data
+        self.current = self.current.next
+        return data
