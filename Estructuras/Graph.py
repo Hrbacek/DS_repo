@@ -13,13 +13,20 @@ class Graph:
         from_node = self.nodes.search(from_value)
         to_node = self.nodes.search(to_value)
 
-        if from_node and to_node and not from_node.neighbors.search(to_value):
-            from_node.neighbors.add(to_node.value)
+        if from_node and to_node:
+            if not from_node.neighbors.search(to_value):
+                from_node.neighbors.add(to_node.value)
+            return True
+
+        return False
 
     def topological_sort(self)-> GraphLinkedList: # Ordenamiento topologico para orden de tareas
         result = GraphLinkedList()
         stack = GraphLinkedList()  
         
+        for node in self.nodes:
+            node.visited = False
+
         for node in self.nodes: # Visita de todos los nodos
             if not node.visited:
                 self._dfs(node, stack)
@@ -37,7 +44,7 @@ class Graph:
 
         for item in topological_sort:
             reversed.push(item)
-        
+
         return reversed
 
     def _dfs(self, node: Node, stack: GraphLinkedList):
@@ -50,9 +57,11 @@ class Graph:
 
         stack.add(node.value)
 
-    def print_graph(self):
+    def __repr__(self):
+        r = ""
         for node in self.nodes:
-            print(f"{node.value} ->", end=" ")
+            r += f"{node.value} -> "
             for neighbor in node.neighbors:
-                print(neighbor, end=" ")
-            print()
+                r += f"{neighbor}, "
+            r += "\n"
+        return r

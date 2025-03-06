@@ -29,6 +29,26 @@ class LinkedList:
             while current.next:
                 current = current.next
             current.next = new_node
+        self.size += 1
+
+    def add_at(self, index, value):
+        if index < 0 or index > self.size:
+            raise IndexError("Index out of bounds")
+        new_node = Node(value)
+        if index == 0:
+            new_node.next = self.head
+            self.head = new_node
+            if self.size == 0:
+                self.tail = new_node
+        else:
+            current = self.head
+            for _ in range(index - 1):
+                current = current.next
+            new_node.next = current.next
+            current.next = new_node
+            if new_node.next is None:
+                self.tail = new_node
+        self.size += 1
 
     def get(self, index: int)->Any:
         """Obtiene el valor en el nodo del indice
@@ -101,3 +121,9 @@ class LinkedList:
         data = self.current.data
         self.current = self.current.next
         return data
+    
+    def __repr__(self):
+        r = ""
+        for item in self:
+            r += f"{str(item)}->"
+        return r

@@ -1,3 +1,5 @@
+from Estructuras.HashTable import HashTable
+
 import time
 
 def limpiar_cache():
@@ -30,11 +32,10 @@ def ejecutar_cat():
     time.sleep(1.5)
     print("[END]Ejecutar cat sobre archivos de logs")
 
-FUNCTION_CATALOG = {
-    "A": limpiar_cache,
-    "B": eliminar_tmp,
-    "C": crear_log_file_tmp,
-    "D": ejecutar_ls,
-    "E": ejecutar_grep,
-    "F": ejecutar_cat
-}
+FUNCTION_CATALOG = HashTable()
+FUNCTION_CATALOG.insert("A", limpiar_cache)
+FUNCTION_CATALOG.insert("B", eliminar_tmp),
+FUNCTION_CATALOG.insert("C", crear_log_file_tmp),
+FUNCTION_CATALOG.insert("D", ejecutar_ls),
+FUNCTION_CATALOG.insert("E", ejecutar_grep),
+FUNCTION_CATALOG.insert("F", ejecutar_cat)
